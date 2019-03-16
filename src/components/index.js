@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import moment from "moment";
+import uuidv4 from "uuid/v4";
 
 import ClipboardItem from "./ClipboardItem";
 import "./index.css";
@@ -8,31 +8,29 @@ const clipboard = window.require("electron-clipboard-extended");
 
 class App extends Component {
   state = {
+    // placeholder date
     items: [
       {
         id: 1,
         content: "Wash my nails",
-        copiedAt: moment(new Date()).fromNow()
+        copiedAt: new Date()
       },
       {
         id: 2,
         content: "Wash my hair",
-        copiedAt: moment(new Date("December 17, 2018 03:24:00")).fromNow()
+        copiedAt: new Date("December 17, 2018 03:24:00")
       },
       {
         id: 3,
         content: "Wash my feet",
-        copiedAt: moment(new Date()).fromNow()
+        copiedAt: new Date()
       }
     ]
   };
   updateItems = () => {
     const currentText = clipboard.readText();
-    const newItem = {
-      id: 421,
-      content: currentText,
-      copiedAt: moment(new Date()).fromNow()
-    };
+    const newItem = this.generateNewItem(currentText);
+
     this.setState(state => ({
       items: [newItem, ...state.items]
     }));
@@ -41,9 +39,11 @@ class App extends Component {
     // attach event listeners
     clipboard.on("text-changed", this.updateItems).startWatching();
   }
-  readClipboard = () => {
-    return clipboard.readText();
-  };
+  generateNewItem = content => ({
+    content,
+    id: uuidv4(),
+    copiedAt: new Date()
+  });
   renderClipboardItems = () => {
     const { items } = this.state;
     if (items && items.length > 0) {
