@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "electron-clipboard-extended": "^1.1.1",
+    "electron-rpc": "^2.0.1",
     "materialize-css": "^1.0.0-rc.2",
     "moment": "^2.24.0",
     "react": "^16.8.4",
