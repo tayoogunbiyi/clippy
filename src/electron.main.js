@@ -4,8 +4,14 @@ const app = electron.app;
 // Module to create native browser window.
 const BrowserWindow = electron.BrowserWindow;
 
-const path = require("path");
-const url = require("url");
+const Server = require("electron-rpc/server");
+const server = new Server();
+
+const { Store } = require("./Store");
+
+const store = new Store({
+  name: "main"
+});
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -14,11 +20,16 @@ let mainWindow;
 function createWindow() {
   // Create the browser window.
   mainWindow = new BrowserWindow({ width: 800, height: 600 });
-
   mainWindow.loadURL("http://localhost:3000");
 
   // Open the DevTools.
   mainWindow.webContents.openDevTools();
+  server.configure(mainWindow.webContents);
+
+  server.on("window-create", (req, next) => {
+    const savedData = store.getData();
+    next(null, savedData);
+  });
 
   // Emitted when the window is closed.
   mainWindow.on("closed", function() {

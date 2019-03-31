@@ -6,27 +6,26 @@ import "./index.css";
 
 const clipboard = window.require("electron-clipboard-extended");
 
+const Client = window.require("electron-rpc/client");
+let client = new Client();
+
 class App extends Component {
-  state = {
-    // placeholder date
-    items: [
-      {
-        id: 1,
-        content: "Wash my nails",
-        copiedAt: new Date()
-      },
-      {
-        id: 2,
-        content: "Wash my hair",
-        copiedAt: new Date("December 17, 2018 03:24:00")
-      },
-      {
-        id: 3,
-        content: "Wash my feet",
-        copiedAt: new Date()
+  state = {};
+  componentWillMount() {
+    // attach event listeners
+    clipboard.on("text-changed", this.updateItems).startWatching();
+    client.request("window-create", (err, items) => {
+      if (err) {
+        this.setState({
+          items: []
+        });
+      } else {
+        this.setState({
+          items
+        });
       }
-    ]
-  };
+    });
+  }
   updateItems = () => {
     const currentText = clipboard.readText();
     const newItem = this.generateNewItem(currentText);
@@ -35,10 +34,6 @@ class App extends Component {
       items: [newItem, ...state.items]
     }));
   };
-  componentWillMount() {
-    // attach event listeners
-    clipboard.on("text-changed", this.updateItems).startWatching();
-  }
   generateNewItem = content => ({
     content,
     id: uuidv4(),
