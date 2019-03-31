@@ -23,6 +23,10 @@ class Store {
   getData() {
     return this.data;
   }
+  updateData(item) {
+    this.data = [item, ...this.data];
+    fs.writeFileSync(this.path, JSON.stringify(this.data));
+  }
 }
 
 module.exports = {

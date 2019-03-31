@@ -31,6 +31,10 @@ function createWindow() {
     next(null, savedData);
   });
 
+  server.on("clipboard-update", (req, next) => {
+    store.updateData(req.body);
+  });
+
   // Emitted when the window is closed.
   mainWindow.on("closed", function() {
     // Dereference the window object, usually you would store windows

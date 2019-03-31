@@ -33,6 +33,7 @@ class App extends Component {
     this.setState(state => ({
       items: [newItem, ...state.items]
     }));
+    client.request("clipboard-update", newItem);
   };
   generateNewItem = content => ({
     content,
@@ -46,7 +47,6 @@ class App extends Component {
     }
   };
   render() {
-    console.log("re rendering ..");
     return (
       <div className="app">
         <h2>Clippy </h2>
