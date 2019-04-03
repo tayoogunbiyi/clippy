@@ -40,10 +40,23 @@ class App extends Component {
     id: uuidv4(),
     copiedAt: new Date()
   });
+  handleDelete = id => {
+    client.request("delete-item", { id }, (err, items) => {
+      this.setState({
+        items
+      });
+    });
+  };
   renderClipboardItems = () => {
     const { items } = this.state;
     if (items && items.length > 0) {
-      return items.map(item => <ClipboardItem key={item.id} {...item} />);
+      return items.map(item => (
+        <ClipboardItem
+          handleDelete={this.handleDelete}
+          key={item.id}
+          {...item}
+        />
+      ));
     }
   };
   render() {

@@ -32,7 +32,13 @@ function createWindow() {
   });
 
   server.on("clipboard-update", (req, next) => {
-    store.updateData(req.body);
+    store.updateData([req.body, ...store.getData()]);
+  });
+
+  server.on("delete-item", (req, next) => {
+    const { id } = req.body;
+    const updatedData = store.deleteData(id);
+    next(null, updatedData);
   });
 
   // Emitted when the window is closed.

@@ -20,11 +20,16 @@ class Store {
       return {};
     }
   }
+  deleteData(id) {
+    const filteredData = this.data.filter(item => item.id !== id);
+    this.updateData(filteredData);
+    return this.data;
+  }
   getData() {
     return this.data;
   }
-  updateData(item) {
-    this.data = [item, ...this.data];
+  updateData(data) {
+    this.data = data;
     fs.writeFileSync(this.path, JSON.stringify(this.data));
   }
 }
