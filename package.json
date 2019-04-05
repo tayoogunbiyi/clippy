@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "bootstrap": "^4.3.1",
     "electron-clipboard-extended": "^1.1.1",
     "electron-rpc": "^2.0.1",
     "materialize-css": "^1.0.0-rc.2",
@@ -10,6 +11,7 @@
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
     "react-scripts": "2.1.8",
+    "reactstrap": "^8.0.0",
     "uuid": "^3.3.2"
   },
   "scripts": {
