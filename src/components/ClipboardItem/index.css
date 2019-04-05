@@ -6,3 +6,9 @@
 .space-below {
   margin-bottom: 20px;
 }
+
+.icon {
+  color: teal !important;
+  margin: 10px;
+  float: right;
+}

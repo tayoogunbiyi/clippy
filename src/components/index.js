@@ -1,7 +1,10 @@
 import React, { Component } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import uuidv4 from "uuid/v4";
 import { Container, Row, Col } from "reactstrap";
 import ClipboardItem from "./ClipboardItem";
+import Search from "./Search";
 import "./index.css";
 
 const clipboard = window.require("electron-clipboard-extended");
@@ -61,11 +64,19 @@ class App extends Component {
       ));
     }
   };
+  handleSearch = e => {
+    // console.log(e.target.value);
+  };
   render() {
     return (
       <div className="app">
-        <h2>Clippy </h2>
+        <h2 className="heading">Clippy </h2>
         <Container>
+          <Search
+            onSearch={this.handleSearch}
+            addon={<FontAwesomeIcon className="icon" icon={faSearch} />}
+            placeholder="Search through your clipboard history"
+          />
           <Row>{this.renderClipboardItems()}</Row>
         </Container>
       </div>
