@@ -4,7 +4,7 @@ import { Button } from "reactstrap";
 import "./index.css";
 
 const controlContent = content => {
-  return content.length > 90 ? `${content.substr(1, 88)}  ...` : content;
+  return content.length > 90 ? `${content.substr(1, 86)}  ...` : content;
 };
 
 export default ({ content, copiedAt, id, handleDelete }) => (

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import uuidv4 from "uuid/v4";
-
+import { Container, Row, Col } from "reactstrap";
 import ClipboardItem from "./ClipboardItem";
 import "./index.css";
 
@@ -51,11 +51,13 @@ class App extends Component {
     const { items } = this.state;
     if (items && items.length > 0) {
       return items.map(item => (
-        <ClipboardItem
-          handleDelete={this.handleDelete}
-          key={item.id}
-          {...item}
-        />
+        <Col xs="6" sm="4" md="3" className="space-below">
+          <ClipboardItem
+            handleDelete={this.handleDelete}
+            key={item.id}
+            {...item}
+          />
+        </Col>
       ));
     }
   };
@@ -63,7 +65,9 @@ class App extends Component {
     return (
       <div className="app">
         <h2>Clippy </h2>
-        {this.renderClipboardItems()}
+        <Container>
+          <Row>{this.renderClipboardItems()}</Row>
+        </Container>
       </div>
     );
   }
