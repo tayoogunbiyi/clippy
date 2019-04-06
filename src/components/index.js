@@ -34,9 +34,11 @@ class App extends Component {
     });
   }
   updateItems = () => {
+    if (this.state.inAppCopy) {
+      return;
+    }
     const currentText = clipboard.readText();
     const newItem = this.generateNewItem(currentText);
-
     this.setState(state => ({
       items: [newItem, ...state.items]
     }));
@@ -63,12 +65,29 @@ class App extends Component {
       toastContent: null
     });
   };
+  handleCopy = async content => {
+    const el = document.createElement("textarea");
+    el.value = content;
+    document.body.appendChild(el);
+    el.select();
+    document.execCommand("copy");
+    document.body.removeChild(el);
+    // We have to prevent in app copying from showing up in the app
+    // This seems like the best behavior
+    await this.setState({
+      inAppCopy: true,
+      showToast: true,
+      toastContent: "Copied !"
+    });
+    setTimeout(this.fadeToast, 4000);
+  };
   renderClipboardItems = () => {
     const { items } = this.state;
     if (items && items.length > 0) {
       return items.map(item => (
         <Col xs="6" sm="4" md="3" className="space-below">
           <ClipboardItem
+            handleCopy={this.handleCopy}
             handleDelete={this.handleDelete}
             key={item.id}
             {...item}
