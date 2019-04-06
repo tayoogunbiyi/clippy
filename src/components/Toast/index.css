@@ -1,0 +1,8 @@
+.center {
+  text-align: center;
+  background-color: #caa9b6;
+  border-radius: 20px;
+  padding: 8px;
+  width: 50%;
+  margin: auto;
+}

@@ -4,8 +4,10 @@ import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import uuidv4 from "uuid/v4";
 import { Container, Row, Col } from "reactstrap";
 import ClipboardItem from "./ClipboardItem";
+import Toast from "./Toast";
 import Search from "./Search";
 import "./index.css";
+// import logo from "../images/clipboard.svg";
 
 const clipboard = window.require("electron-clipboard-extended");
 
@@ -13,7 +15,9 @@ const Client = window.require("electron-rpc/client");
 let client = new Client();
 
 class App extends Component {
-  state = {};
+  state = {
+    showToast: false
+  };
   componentWillMount() {
     // attach event listeners
     clipboard.on("text-changed", this.updateItems).startWatching();
@@ -46,8 +50,17 @@ class App extends Component {
   handleDelete = id => {
     client.request("delete-item", { id }, (err, items) => {
       this.setState({
-        items
+        items,
+        showToast: true,
+        toastContent: "Successfully deleted."
       });
+    });
+    setTimeout(this.fadeToast, 4000);
+  };
+  fadeToast = () => {
+    this.setState({
+      showToast: false,
+      toastContent: null
     });
   };
   renderClipboardItems = () => {
@@ -68,9 +81,12 @@ class App extends Component {
     // console.log(e.target.value);
   };
   render() {
+    const { showToast, toastContent } = this.state;
     return (
       <div className="app">
         <h2 className="heading">Clippy </h2>
+        {/* <img src={logo}/> */}
+        <Toast show={showToast}>{toastContent}</Toast>
         <Container>
           <Search
             onSearch={this.handleSearch}
