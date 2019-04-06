@@ -80,6 +80,10 @@ class App extends Component {
       toastContent: "Copied !"
     });
     setTimeout(this.fadeToast, 4000);
+
+    this.setState({
+      inAppCopy: false
+    });
   };
   renderClipboardItems = () => {
     const { items } = this.state;
