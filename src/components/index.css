@@ -37,3 +37,12 @@ body {
 /* .toast {
   text-align: center;
 } */
+
+.right {
+  float: right;
+}
+
+.right-btn {
+  margin: 20px;
+  margin-top: 5px;
+}

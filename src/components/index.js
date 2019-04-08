@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import { faSearch, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import uuidv4 from "uuid/v4";
-import { Container, Row, Col } from "reactstrap";
+import { Container, Row, Col, Button } from "reactstrap";
 import ClipboardItem from "./ClipboardItem";
 import Toast from "./Toast";
 import Search from "./Search";
@@ -103,11 +103,27 @@ class App extends Component {
   handleSearch = e => {
     // console.log(e.target.value);
   };
+  deleteAll = () => {
+    client.request("empty-clipboard");
+    this.setState({
+      items: [],
+      showToast: true,
+      toastContent: "Emptied Clipboard"
+    });
+    setTimeout(this.fadeToast, 4000);
+  };
   render() {
     const { showToast, toastContent } = this.state;
     return (
       <div className="app">
         <h2 className="heading">Clippy </h2>
+        <div />
+        <div className="right right-btn">
+          <Button size="sm" outline color="danger" onClick={this.deleteAll}>
+            Clear History &nbsp;
+            <FontAwesomeIcon icon={faTrashAlt} />
+          </Button>
+        </div>
         {/* <img src={logo}/> */}
         <Toast show={showToast}>{toastContent}</Toast>
         <Container>
