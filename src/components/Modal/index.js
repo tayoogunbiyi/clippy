@@ -4,7 +4,7 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import "./index.css";
 
 export default ({ toggle, className, title, content, isOpen, handleCopy }) => (
-  <Modal isOpen={isOpen} toggle={toggle} className={className}>
+  <Modal isOpen={isOpen} toggle={toggle} className="modal-wrapper">
     <ModalHeader toggle={toggle}>{title}</ModalHeader>
     <ModalBody>
       <pre>{content}</pre>
