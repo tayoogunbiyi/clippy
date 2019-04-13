@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import moment from "moment";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import uuidv4 from "uuid/v4";
@@ -6,6 +7,7 @@ import { Container, Row, Col, Button } from "reactstrap";
 import ClipboardItem from "./ClipboardItem";
 import Toast from "./Toast";
 import Search from "./Search";
+import Modal from "./Modal";
 import "./index.css";
 // import logo from "../images/clipboard.svg";
 
@@ -16,7 +18,10 @@ let client = new Client();
 
 class App extends Component {
   state = {
-    showToast: false
+    showToast: false,
+    modalOpen: false,
+    currentTitle: null,
+    currentContent: null
   };
   componentWillMount() {
     // attach event listeners
@@ -73,7 +78,7 @@ class App extends Component {
     document.execCommand("copy");
     document.body.removeChild(el);
     // We have to prevent in app copying from showing up in the app
-    // This seems like the best behavior
+    // This seems like the best behavior UI wise
     await this.setState({
       inAppCopy: true,
       showToast: true,
@@ -91,6 +96,13 @@ class App extends Component {
       return items.map(item => (
         <Col xs="6" sm="4" md="3" className="space-below">
           <ClipboardItem
+            handleClick={(content, copiedAt) => {
+              this.setState({
+                currentContent: content,
+                modalOpen: true,
+                currentTitle: moment(copiedAt).format("MMMM Do YYYY, h:mm:ss a")
+              });
+            }}
             handleCopy={this.handleCopy}
             handleDelete={this.handleDelete}
             key={item.id}
@@ -112,8 +124,19 @@ class App extends Component {
     });
     setTimeout(this.fadeToast, 4000);
   };
+  toggleModal = () => {
+    this.setState(prevState => ({
+      modalOpen: !prevState.modalOpen
+    }));
+  };
   render() {
-    const { showToast, toastContent } = this.state;
+    const {
+      showToast,
+      toastContent,
+      modalOpen,
+      currentContent,
+      currentTitle
+    } = this.state;
     return (
       <div className="app">
         <h2 className="heading">Clippy </h2>
@@ -133,6 +156,16 @@ class App extends Component {
             placeholder="Search through your clipboard history"
           />
           <Row>{this.renderClipboardItems()}</Row>
+          <Modal
+            title={currentTitle}
+            content={currentContent}
+            isOpen={modalOpen}
+            toggle={this.toggleModal}
+            handleCopy={content => {
+              this.toggleModal();
+              this.handleCopy(content);
+            }}
+          />
         </Container>
       </div>
     );
