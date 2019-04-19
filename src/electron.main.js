@@ -31,6 +31,8 @@ function createWindow() {
     next(null, savedData);
   });
 
+  server.on("get-store", (req, next) => next(null, store.getData()));
+
   server.on("clipboard-update", (req, next) => {
     store.updateData([req.body, ...store.getData()]);
   });

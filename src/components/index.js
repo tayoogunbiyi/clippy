@@ -94,7 +94,7 @@ class App extends Component {
     const { items } = this.state;
     if (items && items.length > 0) {
       return items.map(item => (
-        <Col xs="6" sm="4" md="3" className="space-below">
+        <Col key={item.id} xs="6" sm="4" md="3" className="space-below">
           <ClipboardItem
             handleClick={(content, copiedAt) => {
               this.setState({
@@ -105,15 +105,35 @@ class App extends Component {
             }}
             handleCopy={this.handleCopy}
             handleDelete={this.handleDelete}
-            key={item.id}
             {...item}
           />
         </Col>
       ));
     }
   };
+  filterClipboardItems = q => {
+    client.request("get-store", (err, items) => {
+      if (!q) {
+        this.setState({
+          items
+        });
+      } else if (err) {
+        this.setState({
+          items: []
+        });
+      } else {
+        const filteredItems = items.filter(item =>
+          item.content.includes(q.trim())
+        );
+        this.setState({
+          items: filteredItems
+        });
+      }
+    });
+  };
+
   handleSearch = e => {
-    // console.log(e.target.value);
+    this.filterClipboardItems(e.target.value);
   };
   deleteAll = () => {
     client.request("empty-clipboard");
