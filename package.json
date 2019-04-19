@@ -11,6 +11,7 @@
     "electron-rpc": "^2.0.1",
     "materialize-css": "^1.0.0-rc.2",
     "moment": "^2.24.0",
+    "npm-run-all": "^4.1.5",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
     "react-scripts": "2.1.8",
@@ -18,7 +19,8 @@
     "uuid": "^3.3.2"
   },
   "scripts": {
-    "start": "BROWSER=none react-scripts start",
+    "react-start": "BROWSER=none react-scripts start",
+    "start": "npm-run-all --parallel react-start electron",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
