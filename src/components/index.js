@@ -21,12 +21,13 @@ class App extends Component {
     showToast: false,
     modalOpen: false,
     currentTitle: null,
-    currentContent: null
+    currentContent: null,
+    q: null
   };
   componentWillMount() {
     // attach event listeners
     clipboard.on("text-changed", this.updateItems).startWatching();
-    client.request("window-create", (err, items) => {
+    client.request("get-store", (err, items) => {
       if (err) {
         this.setState({
           items: []
@@ -44,9 +45,11 @@ class App extends Component {
     }
     const currentText = clipboard.readText();
     const newItem = this.generateNewItem(currentText);
-    this.setState(state => ({
-      items: [newItem, ...state.items]
-    }));
+    if (!this.state.q) {
+      this.setState(state => ({
+        items: [newItem, ...state.items]
+      }));
+    }
     client.request("clipboard-update", newItem);
   };
   generateNewItem = content => ({
@@ -78,7 +81,7 @@ class App extends Component {
     document.execCommand("copy");
     document.body.removeChild(el);
     // We have to prevent in app copying from showing up in the app
-    // This seems like the best behavior UI wise
+    // This seems like the best behavior UX wise
     await this.setState({
       inAppCopy: true,
       showToast: true,
@@ -111,29 +114,24 @@ class App extends Component {
       ));
     }
   };
-  filterClipboardItems = q => {
-    client.request("get-store", (err, items) => {
-      if (!q) {
-        this.setState({
-          items
-        });
-      } else if (err) {
-        this.setState({
-          items: []
-        });
-      } else {
-        const filteredItems = items.filter(item =>
-          item.content.includes(q.trim())
-        );
-        this.setState({
-          items: filteredItems
-        });
-      }
+  filterClipboardItems = store => {
+    const { q } = this.state;
+    const items = store.filter(item => item.content.includes(q.trim()));
+    this.setState({
+      items
     });
   };
 
-  handleSearch = e => {
-    this.filterClipboardItems(e.target.value);
+  handleSearch = async e => {
+    const { value } = e.target;
+    await this.setState({
+      q: value
+    });
+    client.request("get-store", (err, items) => {
+      if (!err) {
+        this.filterClipboardItems(items);
+      }
+    });
   };
   deleteAll = () => {
     client.request("empty-clipboard");
