@@ -6,6 +6,9 @@
 .pnp.js
 
 
+# bundling stuff
+/releases
+
 #editor 
 
 .vscode
