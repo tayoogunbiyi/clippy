@@ -17,7 +17,7 @@ class Store {
       // go ahead to create file if file doesn't exist yet
       console.log("Creating file @", filePath);
       fs.writeFileSync(filePath, JSON.stringify([]));
-      return {};
+      return [];
     }
   }
   deleteData(id) {
