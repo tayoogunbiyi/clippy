@@ -32,7 +32,7 @@ function createWindow() {
     });
   mainWindow.loadURL(startUrl);
 
-  mainWindow.webContents.openDevTools();
+  // mainWindow.webContents.openDevTools();
   server.configure(mainWindow.webContents);
 
   server.on("window-create", (req, next) => {
