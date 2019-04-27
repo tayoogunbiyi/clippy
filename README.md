@@ -17,7 +17,7 @@ Clippy is a desktop application that helps keep track of your clipboard history.
 ### To do
 
 - Add loading screen
-- Unit tests with spectron
+- Integration and Unit tests with spectron, jest.
 
 ### Installation
 
