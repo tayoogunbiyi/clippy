@@ -115,8 +115,10 @@ class App extends Component {
     }
   };
   filterClipboardItems = store => {
-    const { q } = this.state;
-    const items = store.filter(item => item.content.includes(q.trim()));
+    const q = this.state.q.toLowerCase();
+    const items = store.filter(item =>
+      item.content.toLowerCase().includes(q.trim())
+    );
     this.setState({
       items
     });
