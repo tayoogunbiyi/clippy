@@ -41,6 +41,9 @@ class App extends Component {
   }
   updateItems = () => {
     if (this.state.inAppCopy) {
+      this.setState({
+        inAppCopy: false
+      });
       return;
     }
     const currentText = clipboard.readText();
@@ -88,10 +91,6 @@ class App extends Component {
       toastContent: "Copied !"
     });
     setTimeout(this.fadeToast, 4000);
-
-    this.setState({
-      inAppCopy: false
-    });
   };
   renderClipboardItems = () => {
     const { items } = this.state;
