@@ -7,12 +7,12 @@ Clippy is a desktop application that helps keep track of your clipboard history.
 - Simple UI
 - Built with Javascript (Electron and React)
 - Search through your clipboard history
+- Night mode 🌑
 
 # Coming Features
 
 - Search by date
 - Keep track of images copied to the clipboard
-- Night mode 🌑
 - Auto launch on start of computer
 
 ### To do

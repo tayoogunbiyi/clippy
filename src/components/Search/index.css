@@ -1,3 +1,14 @@
 .search {
   margin: 25px;
 }
+
+.night-theme .search-input,
+.night-theme .search-input:hover,
+.search-input:active {
+  background: inherit;
+  color: white;
+}
+
+.day-theme .search-input {
+  background: white;
+}

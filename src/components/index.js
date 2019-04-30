@@ -22,7 +22,8 @@ class App extends Component {
     modalOpen: false,
     currentTitle: null,
     currentContent: null,
-    q: null
+    q: null,
+    nightMode: localStorage.getItem("nightMode")
   };
   componentWillMount() {
     // attach event listeners
@@ -148,19 +149,35 @@ class App extends Component {
       modalOpen: !prevState.modalOpen
     }));
   };
+  toggleNightMode = async () => {
+    await this.setState(prevState => ({
+      nightMode: !prevState.nightMode
+    }));
+    localStorage.setItem("nightMode", this.state.nightMode);
+  };
   render() {
     const {
       showToast,
       toastContent,
       modalOpen,
       currentContent,
-      currentTitle
+      currentTitle,
+      nightMode
     } = this.state;
     return (
-      <div className="app">
+      <div className={!nightMode ? "night-theme" : "day-theme"}>
         <h2 className="heading">Clippy </h2>
         <div />
         <div className="right right-btn">
+          <Button
+            size="sm"
+            color="transparent"
+            title="Toggle night mode"
+            onClick={this.toggleNightMode}
+          >
+            {nightMode ? "🌙" : "🌞"}
+          </Button>
+          &nbsp;
           <Button size="sm" outline color="danger" onClick={this.deleteAll}>
             Clear History &nbsp;
             <FontAwesomeIcon icon={faTrashAlt} />
