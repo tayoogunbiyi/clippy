@@ -1,6 +1,6 @@
 # Clippy
 
-[![N|Solid](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTRSJ-i4aISVUd342bOugA0ub5cuslwj_4LLM83A11Tym__-jGTDA)](https://electronjs.org/)
+<img src="https://electronjs.org/app-img/clippy/clippy-icon-128.png">
 
 Clippy is a desktop application that helps keep track of your clipboard history.
 
