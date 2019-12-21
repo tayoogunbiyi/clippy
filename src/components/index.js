@@ -69,14 +69,10 @@ class App extends Component {
         toastContent: "Successfully deleted."
       });
     });
-    setTimeout(this.fadeToast, 4000);
+    setTimeout(this.fadeToast, 3000);
   };
-  fadeToast = () => {
-    this.setState({
-      showToast: false,
-      toastContent: null
-    });
-  };
+  fadeToast = () => this.setState({ showToast: false, toastContent: null });
+
   handleCopy = async content => {
     const el = document.createElement("textarea");
     el.value = content;
