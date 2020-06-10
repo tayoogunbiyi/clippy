@@ -9,6 +9,8 @@ Clippy is a desktop application that helps keep track of your clipboard history.
 - Search through your clipboard history
 - Night mode 🌑
 
+<img src="https://res.cloudinary.com/dy6smijxx/image/upload/v1557365228/day-mode_vaqois.png">
+
 # Coming Features
 
 - Search by date
